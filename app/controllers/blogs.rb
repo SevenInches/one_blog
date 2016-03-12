@@ -8,11 +8,15 @@ OneBlog::App.controllers :blogs do
     if params[:page].nil?
       params[:page] = 1
     end
-    blogs = Blog.order('created_at desc').all()
-    @blogs = blogs.page(params[:page]).per(4)
-    @hot_users = get_hot_users(4)
-    @tags = Tag.all()
-    render 'blogs/index'
+    blogs = Blog.order('created_at desc')
+    if blogs
+      @blogs = blogs.page(params[:page]).per(4)
+      @hot_users = get_hot_users(4)
+      @tags = Tag.all()
+      render 'blogs/index'
+    else
+      halt 404
+    end    
   end
 
   #博客详情页
