@@ -8,9 +8,8 @@ OneBlog::App.controllers :blogs do
     if params[:page].nil?
       params[:page] = 1
     end
-    blogs = Blog.order('created_at desc')
-    if blogs
-      @blogs = blogs.page(params[:page]).per(4)
+    @blogs = Blog.order('created_at desc').page(params[:page]).per(4)
+    if @blogs
       @hot_users = get_hot_users(4)
       @tags = Tag.all()
       render 'blogs/index'
@@ -35,9 +34,8 @@ OneBlog::App.controllers :blogs do
       if params[:page].nil?
         params[:page] = 1
       end  
-      blogs = Blog.order('created_at desc').where(:account_id => params[:id]).all 
-      if blogs 
-        @blogs = blogs.page(params[:page]).per(4)
+      @blogs = Blog.order('created_at desc').where(:account_id => params[:id]).page(params[:page]).per(4)
+      if @blogs 
         @user = @blogs.first.account
         @title = @user.blog_name
         render 'blogs/user_blog'
@@ -51,9 +49,8 @@ OneBlog::App.controllers :blogs do
     if params[:page].nil?
       params[:page] = 1
     end 
-    blogs = Blog.order('created_at desc').where(:tag => params[:id]).all
-    if blogs
-      @blogs = blogs.page(params[:page]).per(4)
+    @blogs = Blog.order('created_at desc').where(:tag => params[:id]).page(params[:page]).per(4)
+    if @blogs
       @tags = Tag.all
       render 'blogs/tag_blog'
      else
@@ -80,9 +77,8 @@ OneBlog::App.controllers :blogs do
         params[:page] = 1
     end
     @account = $account 
-    blogs = Blog.order('created_at desc').where(:account_id => @account[:id]).all
-    if blogs
-      @blogs = blogs.page(params[:page]).per(10)
+    @blogs = Blog.order('created_at desc').where(:account_id => @account[:id]).page(params[:page]).per(10)
+    if @blogs
       render 'blogs/list'
     else
        halt 404

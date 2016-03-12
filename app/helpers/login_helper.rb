@@ -5,7 +5,8 @@ module OneBlog
     module LoginHelper
       PUBLIC='public'
       ASSETS='/assets/images'
-      def send_picture temp, pic, account
+
+      def send_picture(temp, pic, account)
       	ext = File.extname(pic)
       	target = ASSETS+"/#{account[:id]}_#{account[:name]}_photo#{ext}"  
     	if File.open(PUBLIC+target, 'wb') {|f| f.write temp.read } 
