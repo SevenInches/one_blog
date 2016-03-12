@@ -40,7 +40,7 @@ OneBlog::App.controllers :blogs do
         @blogs = Blog.order('created_at desc').where(:account_id => params[:id]).page(params[:page]).per(4)
         if @blogs 
           @user = @blogs.first.account
-          @title = @user.blog_name
+          @title = (@user.blank?)?'':@user.blog_name
           render 'blogs/user_blog'
         end  
       rescue
