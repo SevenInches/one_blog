@@ -27,5 +27,5 @@
                   %label.col-lg-2.control-label{:for => :info}= '个人简介'
                   .col-lg-10~f.text_area :info, :id => :info, :value=>@account.info, :class=>'form-control form-info'
                   %span.help-inline=error ? f.error_message_on(:info, :class => 'text-error') : ''
-                = f.hidden_field :role, :id => :role, :class=>'form-control form-info', :value=>(@account.role=='admin')?'admin':'common'
+                = f.hidden_field :role, :id => :role, :class=>'form-control form-info', :value=>(@account.role=='admin')?'admin':'common' 
                 %button.btn{:type => "submit"} 修改
