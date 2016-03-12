@@ -11,7 +11,7 @@ OneBlog::App.controllers :blogs do
     @blogs = Blog.order('created_at desc').page(params[:page]).per(4)
     if @blogs
       @hot_users = get_hot_users(4)
-      @tags = Tag.all()
+      @tags = Tag.limit(12).all()
       render 'blogs/index'
     else
       halt 404
@@ -20,27 +20,31 @@ OneBlog::App.controllers :blogs do
 
   #博客详情页
   get :detail, :with => :id do
-    @blog = Blog.find(params[:id])
-    if @blog 
-      @blog.add_view()
-      render 'blogs/detail'
-    else
-       halt 404
-    end   
+    begin
+      @blog = Blog.find(params[:id])
+      if @blog
+        @blog.add_view()
+        render 'blogs/detail'
+       end
+    rescue
+      redirect url(:blogs, :index)
+     end       
   end
 
   #用户博客列表页
   get :user, :with => :id do
       if params[:page].nil?
         params[:page] = 1
-      end  
-      @blogs = Blog.order('created_at desc').where(:account_id => params[:id]).page(params[:page]).per(4)
-      if @blogs 
-        @user = @blogs.first.account
-        @title = @user.blog_name
-        render 'blogs/user_blog'
-      else
-        halt 404
+      end
+      begin  
+        @blogs = Blog.order('created_at desc').where(:account_id => params[:id]).page(params[:page]).per(4)
+        if @blogs 
+          @user = @blogs.first.account
+          @title = @user.blog_name
+          render 'blogs/user_blog'
+        end  
+      rescue
+        redirect url(:blogs, :index)
       end    
   end
 
@@ -48,13 +52,15 @@ OneBlog::App.controllers :blogs do
   get :tag, :with => :id do
     if params[:page].nil?
       params[:page] = 1
-    end 
-    @blogs = Blog.order('created_at desc').where(:tag => params[:id]).page(params[:page]).per(4)
-    if @blogs
-      @tags = Tag.all
-      render 'blogs/tag_blog'
-     else
-       halt 404
+    end
+    begin  
+      @blogs = Blog.order('created_at desc').where(:tag => params[:id]).page(params[:page]).per(4)
+      if @blogs
+        @tags = Taglimit(12).all()
+        render 'blogs/tag_blog'
+      end  
+     rescue
+       redirect url(:blogs, :index)
      end   
   end
 
