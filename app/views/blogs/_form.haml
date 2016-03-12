@@ -1,0 +1,24 @@
+- error = @blog.errors.include?(:title)
+.form-group{:class => error ? 'has-error' : ''}
+  %label.col-lg-2.control-label{:for => :title}= '标题'
+  .col-lg-5= f.text_field :title, :id => :title, :value => @blog[:title], :autofocus => true, :class =>'form-control'
+  %span.help-inline=error ? f.error_message_on(:title, :class => 'text-error') : ''
+- error = @blog.errors.include?(:abstract)
+.form-group{:class => error ? 'has-error' : ''}
+  %label.col-lg-2.control-label{:for => :abstract}= '摘要'
+  .col-lg-10~f.text_area :abstract, :id => :abstract, :value => @blog[:abstract], :autofocus => true, :class =>'form-control'
+  %span.help-inline=error ? f.error_message_on(:abstract, :class => 'text-error') : ''
+- error = @blog.errors.include?(:tag_id)
+.form-group{:class => error ? 'has-error' : ''}
+  %label.col-lg-2.control-label{:for => :tag_id}= '标签'
+  .col-lg-10=f.select :tag_id, :options =>@blog_tags
+  %span.help-inline=error ? f.error_message_on(:body, :class => 'text-error') : ''       
+- error = @blog.errors.include?(:body)
+.form-group{:class => error ? 'has-error' : ''}
+  %label.col-lg-2.control-label{:for => :body}= '内容'
+  .col-lg-10~f.text_area :body, :id => :body, :value => @blog[:body], :autofocus => true, :class =>'form-control'
+  %span.help-inline=error ? f.error_message_on(:body, :class => 'text-error') : '' 
+  = f.hidden_field :account_id, :id => :account_id, :class=>'form-control', :value=>(@blog[:account_id].nil?)?($account.id):(@blog[:account_id])          
+.form-group
+  .col-lg-offset-10
+    %button.btn{:type => "submit"} 确认

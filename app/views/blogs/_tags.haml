@@ -1,0 +1,7 @@
+%ul.tag_nav.list-unstyled
+  %h4 热门标签
+  - @tags.each do |tag|
+    %li.active
+      %a{:href => "/blogs/tag/#{tag.id}"}= tag.tag_name
+  .clearfix
+  

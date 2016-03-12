@@ -1,0 +1,15 @@
+.container
+  .main.row
+    %h2.style 热门用户
+    .grids_of_4.row
+      - @hot_users.each do |user|
+        .col-md-3.images_1_of_4
+          .fancyDemo
+            %a{:href => url(:blogs,:user,:id =>user.id), :rel => "group", :title => ""}
+              %img.img-responsive{:alt => "", :src => (user.photo.nil?)?$demo_photo:user.photo.to_s}/
+          %h3
+            %a{:href => url(:blogs,:user,:id =>user.id)}= user.name
+          %p.para= (user.info.nil?)?'':user.info
+          %h4
+            %a{:href => url(:blogs,:user,:id =>user.id)}= user.email
+      .clear

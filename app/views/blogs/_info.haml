@@ -1,0 +1,4 @@
+.info
+  %img{:alt => "", :src => (@user.photo.blank?)?'/images/ads_pic.jpg':@user.photo.to_s}/
+  %h4.user_name= @user.name
+  %h5.user_info= @user.info

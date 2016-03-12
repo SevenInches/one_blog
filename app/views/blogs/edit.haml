@@ -1,0 +1,16 @@
+=javascript_include_tag '/editor/js/froala_editor.min'
+=stylesheet_link_tag '/editor/css/font-awesome.min', '/editor/css/froala_editor.min'
+.top-content
+  .inner-bg
+    .container
+      .row
+        .form-box
+          .form-top
+            .form-top-left
+              %h3 博客修改
+              %p 
+            .form-top-right
+              %i.fa.fa-user
+          .form-bottom
+            =form_for :blog, url(:blogs, :update, :id => @blog.id), :method => :put, :class => 'form-horizontal' do |f|
+              =partial 'blogs/form', :locals => { :f => f }  

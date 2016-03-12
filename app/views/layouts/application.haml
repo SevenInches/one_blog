@@ -1,0 +1,57 @@
+!!!
+%html
+  %head
+    %title 欢迎进入one_blog博客
+    / 静态文件
+    = stylesheet_link_tag "bootstrap","style","form-elements"
+    = javascript_include_tag "jquery","scripts","bootstrap-modal","application"
+  %body
+    #home.header_bg
+      .container
+        .row.header.text-center.specials
+          .h_logo
+            %a{:href => "index.html"}
+              %img.responsive{:alt => "", :src => "/images/logo.png"}/
+          %nav.top-nav
+            %ul.top-nav.nav_list
+              %li.logo.page-scroll
+                %a{:href => url(:blogs,:index), :title => "首页"}  
+                  %img.responsive{:alt => "", :src => "/images/logo.png"}/
+              %li.page-scroll
+                =link_to '热门用户', url(:blogs, :hot)             
+              - if $account.present?    
+                %li.page-scroll
+                  =link_to '我的博客', url(:blogs,:list)
+                %li.page-scroll
+                  =link_to '修改个人信息', url(:login,:edit)
+                %li.page-scroll
+                  =link_to '上传头像', url(:login,:photo)  
+            %a#pull{:href => "javascript:;"}
+              %img{:src => "/images/nav-icon.png", :title => "menu"}/
+            - if $account.present?
+              .topnav-userinfo.login_users{:style => ""}
+                %ul
+                  %a{:href => url(:blogs,:user,:id=>$account.id)}
+                    %li
+                      %span.user_name= $account.name
+                  %a#user-signout{:href => "/logout"}
+                    %li
+                      %span 注销
+            - else
+              .topnav-userinfo.login_fales
+                %ul
+                  %li
+                    %span.btn.btn-big-green{"data-target" => "#loginModal", "data-toggle" => "modal", :type => "button"} 登录
+                  %li= link_to '注册', url(:login, :register), :class => 'btn'
+          .clearfix
+    #main
+      = yield
+    = partial 'layouts/login'
+    .footer1_bg
+      .container
+        .row.footer
+          .copy.text-center
+            %p.link
+              %span © 欢迎使用one_blog - lijinghao333@aliyun.com
+            %a#toTop{:href => "javascript:;", :style => "display: block;"}
+              %span#toTopHover{:style => "opacity: 1;"}

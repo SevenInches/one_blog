@@ -1,0 +1,7 @@
+%ul.ads_nav.list-unstyled
+  %h4 活跃用户
+  - @hot_users.each do |user|
+    %li
+      %a{:href => url(:blogs,:user,:id => user.id,:page => 1)}
+        %img{:alt => "", :src => (user.photo.nil?)?$demo_photo:user.photo.to_s}/
+  .clearfix

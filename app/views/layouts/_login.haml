@@ -1,0 +1,21 @@
+#loginModal.modal{"aria-labelledby" => "loginModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-sm{:role => "document"}
+    .modal-content
+      = form_tag :class=>'login form-horizontal' do
+        .login-header.modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+          %h4#loginModalLabel.modal-title 登录
+        .login-body.modal-body
+          .alert.alert-danger.fade.in{:style => "display:none;"}
+            邮箱或密码错误
+            %button.close{"data-dismiss" => "alert", :type => "button"} ×
+          .form-group{:style => "height:25px;"}
+            %label.col-lg-2.control-label{:for => :email}= 'email'
+            .col-lg-10= email_field_tag :email, :id => :email, :value => params[:email], :autofocus => true, :class =>'form-control'
+          .form-group{:style => "height:25px;"}
+            %label.col-lg-2.control-label{:for => :password}= '密码'
+            .col-lg-10= password_field_tag :password, :id => :password, :class =>'form-control'
+        .login-footer.modal-footer
+          %button.btn.btn-default{"data-dismiss" => "modal"} 取消
+          %button#login_submit.btn{"href" => "javascript:;"} 确认

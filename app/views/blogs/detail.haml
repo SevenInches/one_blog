@@ -1,0 +1,41 @@
+= javascript_include_tag "markdown", "to-html"
+.blog
+  / start main
+  .container
+    .main.row
+      .col-md-8.blog_left
+        %h2.style= @blog.title
+        %a{:href => "single-page.html"}
+          %img.blog_img.img-responsive{:alt => "", :src => "images/blog_pic1.jpg"}/
+        %h4
+        .blog_list.pull-left
+          %ul.list-unstyled
+            %li
+              %i.fa.fa-calendar-o
+              %span= (@blog.created_at || Time.now).strftime("%m-%d %Y")
+            %li
+              %i.fa.fa-user
+              %span= link_to @blog.account.name, url_for(:blogs, :user, :id => @blog.account_id)
+            %li
+              %i.fa.fa-eye
+              %span
+                = (@blog.view.nil?)?0:@blog.view
+                次浏览
+        .b_left.pull-right
+          %ul.tag_nav
+            %li.active
+              %a{:href => ""}
+                %i.fa.fa-heart
+                %span= (@blog.tag.blank?)?'':@blog.tag.tag_name
+        .clearfix
+        %p#blog_body= @blog.body.html_safe
+        #disqus_thread
+      .col-md-4.blog_right
+        .info
+          %img{:alt => "", :src => (@blog.account.photo.blank?)?'/images/ads_pic.jpg':@blog.account.photo.to_s}/
+          %h4.user_name= @blog.account.name
+          %h5.user_info= @blog.account.info
+      .clearfix
+  %noscript
+    Please enable JavaScript to view the
+    %a{:href => "https://disqus.com/?ref_noscript", :rel => "nofollow"} comments powered by Disqus.

@@ -1,0 +1,56 @@
+.top-content
+  .inner-bg
+    .container
+      .row
+        .col-sm-6.col-sm-offset-3.form-box
+          = form_for :account, url(:login, :new), :class => 'form-horizontal registration-form ' do |f|
+            %fieldset{:style => "display: block;"}
+              .form-top
+                .form-top-left
+                  %h3 STEP ONE
+                  %p 账户信息
+                .form-top-right
+                  %i.fa.fa-user
+              .form-bottom
+                - error = @account.errors.include?(:email)
+                .form-group{:class => error ? 'has-error' : ''}
+                  %label.col-lg-2.control-label{:for => :email}= 'email'
+                  .col-lg-10= f.text_field :email, :id => :email, :value => params[:email], :autofocus => true, :class =>'form-control form-email'
+                  %span.help-inline=error ? f.error_message_on(:email, :class => 'text-error') : '' 
+                - error = @account.errors.include?(:password)
+                .form-group{:class => error ? 'has-error' : ''}
+                  %label.col-lg-2.control-label{:for => :password}= '密码'
+                  .col-lg-10= f.password_field :password, :id => :password, :class =>'form-control form-password'
+                  %span.help-inline=error ? f.error_message_on(:password, :class => 'text-error') : ''
+                - error = @account.errors.include?(:password_confirmation)  
+                .form-group{:class => error ? 'has-error' : ''}
+                  %label.col-lg-2.control-label{:for => :password_confirmation}= '密码确认'
+                  .col-lg-10= f.password_field :password_confirmation, :id => :password_confirmation, :class =>'form-control form-password-confirmation'
+                  %span.help-inline=error ? f.error_message_on(:password_confirmation, :class => 'text-error') : ''
+                %button.btn.btn-next{:type => "button"}  下一步
+            %fieldset
+              .form-top
+                .form-top-left
+                  %h3 STEP TWO
+                  %p 详细信息
+                .form-top-right
+                  %i.fa.fa-twitter
+              .form-bottom
+                - error = @account.errors.include?(:name)
+                .form-group{:class => error ? 'has-error' : ''}
+                  %label.col-lg-2.control-label{:for => :name}= '用户名'
+                  .col-lg-10= f.text_field :name, :id => :name, :class =>'form-control form-name'
+                  %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : ''
+                - error = @account.errors.include?(:blog_name)  
+                .form-group{:class => error ? 'has-error' : ''}
+                  %label.col-lg-2.control-label{:for => :blog_name}= '博客名'
+                  .col-lg-10= f.text_field :blog_name, :id => :blog_name, :class =>'form-control form-blog-title'
+                  %span.help-inline=error ? f.error_message_on(:blog_name, :class => 'text-error') : ''
+                - error = @account.errors.include?(:info) 
+                .form-group
+                  %label.col-lg-2.control-label{:for => :info}= '个人简介'
+                  .col-lg-10~f.text_area :info, :id => :info, :class=>'form-control form-info'
+                  %span.help-inline=error ? f.error_message_on(:info, :class => 'text-error') : ''
+                = f.hidden_field :role, :id => :role, :class=>'form-control form-info', :value=>'common'
+                %button.btn.btn-previous{:type => "button"} 上一步
+                %button.btn{:type => "submit"} 注册

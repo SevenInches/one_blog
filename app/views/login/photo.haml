@@ -1,0 +1,25 @@
+= stylesheet_link_tag "/bootstrap/css/bootstrap-fileupload"
+= javascript_include_tag "/bootstrap/js/bootstrap-fileupload"
+.container
+  .main.row
+    %h2.style 上传头像
+    %label.control-label  原头像
+    .original_img
+      - if ($account.present?)&&($account.photo.present?)
+        = image_tag($account.photo.to_s)
+    %label.control-label 缩略图
+    = form_for :account, url(:login,:upload), :class => 'form-horizontal',:enctype =>'multipart/form-data' do |f|
+      .control-group
+        .controls
+          .fileupload.fileupload-new{"data-provides" => "fileupload"}
+            %input{:type => "hidden"}/
+            .fileupload-new.thumbnail{:style => "width: 200px; height: 150px;"}
+              %img{:alt => "", :src => ""}/
+            .fileupload-preview.fileupload-exists.thumbnail{:style => "max-width: 200px; max-height: 150px; line-height: 20px;"}
+            %div
+              %span.btn.btn-file
+                %span.fileupload-new 选择图片
+                %span.fileupload-exists 更换
+                = file_field_tag "img"
+                %a.btn.fileupload-exists{"data-dismiss" => "fileupload", :href => "#"} 移除
+      = f.submit :save, :class => 'btn btn-primary'

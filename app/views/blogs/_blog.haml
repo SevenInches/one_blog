@@ -1,0 +1,29 @@
+- @blogs.each do |blog|
+  .content-grid-info
+    %img{:alt => "", :src => ""}/
+    .post-info
+      %h4= link_to blog.title, url_for(:blogs, :detail, :id => blog)
+      .blog_list.pull-left
+        %ul.list-unstyled
+          %li
+            %i.fa.fa-calendar-o
+            %span= (blog.created_at || Time.now).strftime("%m/%d/%Y")
+          %li
+            %i.fa
+              - if blog.account.present?
+                %span= link_to blog.account.name, url_for(:blogs, :user, :id => blog.account_id)
+          %li
+            %i.fa.fa-eye
+            %span
+              = (blog.view.nil?)?0:blog.view
+              次浏览
+      .b_left.pull-right
+        - if blog.tag.present?
+          %ul.tag_nav
+            %li.active
+              = link_to blog.tag.tag_name, url_for(:blogs, :detail, :id => blog)
+      .clearfix
+      %p.para
+        = (blog.abstract)
+      .read_more.btm
+        = link_to '详情', url_for(:blogs, :detail, :id => blog)         

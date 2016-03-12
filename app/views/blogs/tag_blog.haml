@@ -1,0 +1,11 @@
+.blog
+  .container
+    .main.row
+      .col-md-8.blog_left
+        %h2.style= @title
+        .blog_list
+          = partial 'blogs/blog'
+        = paginate @blogs 
+      .col-md-4.blog_right
+        = partial 'blogs/tags'
+      .clearfix

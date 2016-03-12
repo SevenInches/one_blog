@@ -1,0 +1,31 @@
+.top-content
+  .inner-bg
+    .container
+      .row
+        .col-sm-6.col-sm-offset-3.form-box
+          = form_for :account, url(:login, :update, :id => @account.id), :method => :put, :class => 'form-horizontal ' do |f|
+            %fieldset{:style => "display: block;"}
+              .form-top
+                .form-top-left
+                  %h3 修改个人信息
+                  %p 
+                .form-top-right
+                  %i.fa.fa-twitter
+              .form-bottom
+                - error = @account.errors.include?(:name)
+                .form-group{:class => error ? 'has-error' : ''}
+                  %label.col-lg-2.control-label{:for => :name}= '用户名'
+                  .col-lg-10= f.text_field :name, :id => :name, :value=>@account.name, :class =>'form-control form-name'
+                  %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : ''
+                - error = @account.errors.include?(:blog_name)  
+                .form-group{:class => error ? 'has-error' : ''}
+                  %label.col-lg-2.control-label{:for => :blog_name}= '博客名'
+                  .col-lg-10= f.text_field :blog_name, :id => :blog_name, :value=>@account.blog_name, :class =>'form-control form-blog-title'
+                  %span.help-inline=error ? f.error_message_on(:blog_name, :class => 'text-error') : ''
+                - error = @account.errors.include?(:info) 
+                .form-group
+                  %label.col-lg-2.control-label{:for => :info}= '个人简介'
+                  .col-lg-10~f.text_area :info, :id => :info, :value=>@account.info, :class=>'form-control form-info'
+                  %span.help-inline=error ? f.error_message_on(:info, :class => 'text-error') : ''
+                = f.hidden_field :role, :id => :role, :class=>'form-control form-info', :value=>(@account.role=='admin')?'admin':'common'
+                %button.btn{:type => "submit"} 修改
